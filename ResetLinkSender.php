@@ -1,5 +1,7 @@
 <?php session_start();
 
+    /* THIS IS NOT THE SAME CODE ON THE SERVER */
+
     function send_password_reset($get_name, $get_email, $token) {
         // Recipient
         $to = $get_email;
