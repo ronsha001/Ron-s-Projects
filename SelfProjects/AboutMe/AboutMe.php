@@ -12,7 +12,7 @@
         $login_or_logout = "Logout";
         $loginLink_or_logoutLink = "../../logout.php";
         $isRegistered = true;
-    } //a
+    }
 ?>
 
 <!DOCTYPE html>
