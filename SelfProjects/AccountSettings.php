@@ -3,10 +3,12 @@
     $token = '';
     $username = '';
     $email = '';
+    $isRegistered = false;
     if (isset($_SESSION['token'])){
         $token =  $_SESSION['token'];
         $username = $_SESSION['username'];
         $email = $_SESSION['email'];
+        $isRegistered = true;
     } else {
         header("Location: ../index.php");
         exit();
@@ -204,8 +206,9 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.php">Home</a></li>
-            <li><a href="../logout.php" >Logout</a></li>
+            <li><a href='<?php if($isRegistered){echo "Profile.php";}else{echo "../index.php";} ?>'>Profile</a></li>
             <li><a href="AboutMe/AboutMe.php">About</a></li>
+            <li><a href="../logout.php" >Logout</a></li>
         </ul>
         <div class="burger">
             <div class="lin1"></div>

@@ -56,13 +56,14 @@
         </div>
         <ul class="nav-links">
             <li><a href="../index.php">Home</a></li>
-            <li><a href=<?php echo $loginLink_or_logoutLink ?> > <?php echo $login_or_logout ?></a></li>
+            <li><a href='<?php if($isRegistered){echo "../Profile.php";}else{echo "../../index.php";} ?>'>Profile</a></li>
             <li><a href="<?php
                 if ($isRegistered) {
                     echo "../AccountSettings.php";
                 } else {
                     echo "../../index.php";
                 } ?>">Account Settings</a></li>
+            <li><a href=<?php echo $loginLink_or_logoutLink ?> > <?php echo $login_or_logout ?></a></li>
         </ul>
         <div class="burger">
             <div class="lin1"></div>
