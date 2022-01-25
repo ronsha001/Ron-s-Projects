@@ -80,18 +80,22 @@
                 </div>
                 <div class="content">
                     <h3>Hi <?php echo $user ?>, my name is Ron and I created this website.</h3>
-                    <p>I'm 25 years old, software engineer student.
-                    I specialize mostly in Java, but I also deal with other software languages and technologies,
-                    Such as Full Stack Developer, Backend, Frontend, React, NodeJS, JavaScript, PHP, Java, Object Oriented,
+                    <p>I'm 25 years old, software engineer student and live in Israel, central.
+                    While serving in the IDF as a security officer, I began to learn a little about software languages.
+                    Upon completion of my duty, I enrolled for a degree in software engineering.
+                    Today I am a third-year student.
+                    I like challenging and interesting things, help others and learn new things.</p>
+                    <p>Today I specialize mostly in Java, but I also deal with other software languages and technologies,
+                    Such as Full Stack Developer, Backend, Frontend, React, NodeJS, JavaScript, PHP, Java, C, Git, Object Oriented,
                     Python, Cisco, Android, XML, Linux, Assembly, UML, MongoDB, MySQL.</p>
                     <div class="button">
-                        <a href="https://github.com/ronsha001/Ron-s-Projects">Website Code</a>
+                        <a href="https://github.com/ronsha001/Ron-s-Projects" target="_blank">Website Code</a>
                     </div>
                 </div>
                 <div class="social">
-                    <a href="https://www.instagram.com/ronsharabii/"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/ron-sharabi-54267921b/"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/ronsha001"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/ronsharabii/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/ron-sharabi-54267921b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ronsha001" target="_blank"><i class="fab fa-github" ></i></a>
                 </div>
             </div>
             <div class="image-section">
