@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Guessing">
+		<meta name="keywords" content="Guessing number game">
+		<meta name="author" content="Ron Sharabi">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>NumberGame</title>
+		
+		<style>
+			body{
+				background-color: lightblue;
+			}
+			#ins{
+				text-align: center;
+			}
+			#ins1{
+				text-align: center;
+				color: red;
+			}
+			fieldset {position: absolute; 
+				left: 430px; 
+				height: 250px; 
+				width: 598px; 
+				background:black; 
+				margin: 30px;
+				border-radius: 8px;
+			}
+			fieldset >*{
+				text-align: center;
+				color: navy; 
+				font-family:courier; 
+				font-size:25px;
+			}
+			#answer{
+				position: absolute;
+				margin: 5px;
+				width: 93%;
+				height: 50%;
+				background-color: lightblue;
+				color: black;
+				font-size: 50px;
+			}
+			#Right{
+				position: absolute;
+				left: 27%;
+				bottom: 3%;
+				width:50%;
+				height: 25%
+			}
+			#Retry{
+				position: absolute;
+				left: 82%;
+			}
+			#goBack{
+				background-color: aquamarine;
+				position: absolute;
+				right: 43%;
+				bottom: 15%;
+				font-size: 30px;
+			}
+
+			@media only screen and (max-width: 500px){
+				#ins{
+					width: 650px;
+					
+					text-align: center;
+				}
+				#ins1{
+					width: 650px;
+					text-align: center;
+					color: red;
+				}
+				fieldset {
+					position: absolute; 
+					top: 50%;
+					left: 2%; 
+					height: 250px; 
+					width: 490px; 
+					background:black; 
+					margin: 30px;
+					border-radius: 8px;
+				}
+				fieldset >*{
+					text-align: center;
+					color: navy; 
+					font-family:courier; 
+					font-size:20px;	
+				}
+				#goBack{
+					background-color: aquamarine;
+					height: 50px;
+					position: absolute;
+					right: 5%;
+					top: 100%;
+					font-size: 20px;
+					border-radius: 10px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="ins">Think about a number (1000-9999).</h1>
+		<h1 id="ins">I will guess your number in maximum 13 guesses !</h1>
+		<br>
+		<h3 id="ins1">Give me a hint by clicking the buttons.</h3>
+		<fieldset>
+		<input type="button" value="Guess Higher" onclick="clickedH()">
+		<input type="button" value="Guess Lower" onclick="clickedL()">
+		<input id="Retry" type="button" value="Retry" onclick="retry()">
+		<br>
+		<input type="text" id="answer" placeholder="My guess: 5500" disabled>
+		<br>
+		<input id="Right" type="button" value="Am I right ?!" onclick="clickedR()">
+		</fieldset>
+
+		<button type="button" id="goBack" onclick="window.location.href='index.php'">Back to menu</button>
+		
+		<script>
+			var num = 4500;
+			var finalNum = 5500;
+			var String;
+			var count = 0;
+			function clickedH() {
+				if (num > 1){
+					num /= 2;
+				}
+				num = Math.round(num);
+				finalNum += num;
+				String ="My guess: "+finalNum;
+				answer.value = String;
+				count++;
+			}
+			function clickedL() {
+				if (num > 1){
+					num /= 2;
+				}
+				num = Math.round(num);
+				finalNum -= num;
+				String ="My guess: "+finalNum;
+				answer.value = String;
+				count++;
+			}
+			function clickedR() {
+				alert("Did it in "+ count +" times.");
+			}
+			function retry(){
+				num = 4500;
+				finalNum = 5500;
+				count = 0;
+				String ="My guess: "+finalNum;
+				answer.value = String;
+			}//finish
+		</script>
+	</body>
+</html>

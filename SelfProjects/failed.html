@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="description" content="Running Character failed page">
+		<meta name="keywords" content="running character avoid poop failed page">
+		<meta name="author" content="Ron Sharabi">
+
+
+        <title>Failed</title>
+        <link rel="icon" type="png" href="images/poopFail.png">
+        
+        <style>
+        #poop{
+            position: absolute;
+            right: 550px;
+            bottom: 100px;
+        }
+        #btn{
+            position: absolute;
+            right: 630px; 
+            width: 300px;
+            height: 50px;
+            top: 15%;
+            background-color:blue;
+            font-size: 25px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        #back{
+            position: absolute;
+            right: 710px;
+            top: 25%;
+            font-size: 20px;
+            background-color: greenyellow;
+        }
+        #msg{
+            position: absolute;
+            right: 20%;
+            top: 0%;
+            color:red;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        </style>
+    </head>
+    <body>
+        <h1 id = "msg">Doron please try to avoid the poops on the sidewalk :)</h1>
+
+        <img src="images/poopFail.png" id="poop" width="450" height="400">
+        <button type="button" id="btn" onclick="window.location.href='walkingCharacter.html'">Try Again</button>
+        <button type="button" id="back" onclick="window.location.href='index.php'">Back To Menu</button> 
+
+    </body>
+</html>

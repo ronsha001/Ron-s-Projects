@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Slide Puzzle Solver 3x3</title>
+
+        <style>
+
+        </style>
+    </head>
+
+    <body>
+
+        <script>
+            const ROW_SIZE = 3;
+            const PUZZLE_SIZE = 9;
+            var puzzle = [
+                [1,2,4],
+                [3,0,5],
+                [7,6,8]
+            ];
+            var origin = [
+                [1,3,2],
+                [4,6,5],
+                [7,8,0]
+            ];
+            var arrUP = [
+                [0,0,0],
+                [0,0,0],
+                [0,0,0]
+            ];
+            var arrDOWN = [
+                [0,0,0],
+                [0,0,0],
+                [0,0,0]
+            ];
+            var arrLEFT = [
+                [0,0,0],
+                [0,0,0],
+                [0,0,0]
+            ];
+            var arrRIGHT = [
+                [0,0,0],
+                [0,0,0],
+                [0,0,0]
+            ];
+            var flag = [0,0,0,0,0,0,0,0,0];
+            
+
+            
+            
+            solve();
+            
+
+            // solve
+            function solve(){
+
+                if (!isSolvable()){
+                    alert("Unsolvable");
+                    return;
+                }
+
+                var flagUP = false , flagDOWN = false , flagLEFT = false , flagRIGHT = false;
+                var countMoves = 0;
+                while(!isSolved()){
+                    // print puzzle
+                    printPuzzle(puzzle);
+                    // get coordinates of blank spot
+                    var blank = searchBlank();
+                    // find where can blank spot move (up/down/left/right)
+                    var possibilities = findPossibilities(blank);
+
+                    // split possibilities by "," (make an array with directions)
+                    var directions = possibilities.split(",");
+                    // print all possible directions
+                    printPossibilities(directions);
+                    // H: Estimates distance to goal.
+                    var upH = 100 , downH = 100 , leftH = 100 , rightH = 100;
+                    // search shortest way to goal
+                    for (var i = 0; i < directions.length; i++){
+                        switch(directions[i]){
+                            case "up":
+                                document.write("up <br>");
+                                copyArray(arrUP , puzzle);
+                                arrUP[blank[0] - 1][blank[1]] = 0;
+                                arrUP[blank[0]][blank[1]] = puzzle[blank[0] - 1][blank[1]];
+                                printPuzzle(arrUP);
+                                upH = calcH(arrUP);
+                                document.write("H = "+upH+"<br>------------<br>");
+                                break;
+
+                            case "down":
+                                document.write("down <br>");
+                                copyArray(arrDOWN , puzzle);
+                                arrDOWN[blank[0] + 1][blank[1]] = 0;
+                                arrDOWN[blank[0]][blank[1]] = puzzle[blank[0] + 1][blank[1]];
+                                printPuzzle(arrDOWN);
+                                downH = calcH(arrDOWN);
+                                document.write("H = "+downH+"<br>------------<br>");
+                                break;
+
+                            case "left":
+                                document.write("left <br>");
+                                copyArray(arrLEFT , puzzle);
+                                arrLEFT[blank[0]][blank[1] - 1] = 0;
+                                arrLEFT[blank[0]][blank[1]] = puzzle[blank[0]][blank[1] - 1];
+                                printPuzzle(arrLEFT);
+                                leftH = calcH(arrLEFT);
+                                document.write("H = "+leftH+"<br>------------<br>");
+                                break;
+
+                            case "right":
+                                document.write("right <br>");
+                                copyArray(arrRIGHT , puzzle);
+                                arrRIGHT[blank[0]][blank[1] + 1] = 0;
+                                arrRIGHT[blank[0]][blank[1]] = puzzle[blank[0]][blank[1] + 1];
+                                printPuzzle(arrRIGHT);
+                                rightH = calcH(arrRIGHT);
+                                document.write("H = "+rightH+"<br>------------<br>");
+                                break;
+                        }
+                    }
+
+                    //alert("upH = "+upH+" , downH = "+downH+" , leftH = "+leftH+" , rightH = "+rightH);
+
+                    if (upH > -1 && upH < downH && upH < leftH && upH < rightH && flagUP == false){
+                        document.write("Continue with UP move <br>");
+                        copyArray(puzzle , arrUP);
+                        if (isEquals(origin , puzzle)){ flagUP == true; }
+                        countMoves++;
+                    } else if (downH > -1 && downH < upH && downH < leftH && downH < rightH && flagDOWN == false){
+                        document.write("Continue with DOWN move <br>");
+                        copyArray(puzzle , arrDOWN);
+                        if (isEquals(origin , puzzle)){ flagDOWN == true; }
+                        countMoves++;
+                    } else if (leftH > -1 && leftH < rightH && leftH < upH && leftH < downH && flagLEFT == false){
+                        document.write("Continue with LEFT move <br>");
+                        copyArray(puzzle , arrLEFT);
+                        if (isEquals(origin , puzzle)){ flagLEFT == true; }
+                        countMoves++;
+                    } else if (rightH > -1 && rightH < leftH && rightH < upH && rightH < downH && flagRIGHT == false){
+                        document.write("Continue with RIGHT move <br>");
+                        copyArray(puzzle , arrRIGHT);
+                        if (isEquals(origin , puzzle)){ flagRIGHT == true; }
+                        countMoves++;
+                    } else if (upH == downH && flagUP == false || upH == leftH && flagUP == false || upH == rightH && flagUP == false ){
+                        document.write("Continue with UP move <br>");
+                        copyArray(puzzle , arrUP);
+                        if (isEquals(origin , puzzle)){ flagUP == true; }
+                        countMoves++;
+                    } else if (downH == upH && flagDOWN == false || downH == leftH && flagDOWN == false || downH == rightH && flagDOWN == false){
+                        document.write("Continue with DOWN move <br>");
+                        copyArray(puzzle , arrDOWN);
+                        if (isEquals(origin , puzzle)){ flagDOWN == true; }
+                        countMoves++;
+                    } else if (leftH == upH && flagLEFT == false || leftH == downH && flagLEFT == false || leftH == rightH && flagLEFT == false){
+                        document.write("Continue with LEFT move <br>");
+                        copyArray(puzzle , arrLEFT);
+                        if (isEquals(origin , puzzle)){ flagLEFT == true; }
+                        countMoves++;
+                    } else if (rightH == upH && flagRIGHT == false || rightH == downH && flagRIGHT == false || rightH == leftH && flagRIGHT == false){
+                        document.write("Continue with RIGHT move <br>");
+                        if (isEquals(origin , puzzle)){ flagRIGHT == true; }
+                        copyArray(puzzle , arrRIGHT);
+                        countMoves++;
+                    }
+
+                    if (countMoves > 50){
+                        return;
+                    }
+
+                    if (isSolved()){
+                        alert("Solved !");
+                        return;
+                    } else {
+                        //alert("Unsolved !");
+                    }
+                }
+
+            }
+
+            // search for the blank spot
+            function searchBlank(){
+                var blank = [-1 , -1];
+                var index = -1;
+                for (var i = 0; i < ROW_SIZE; i++){
+                    for (var j = 0; j < ROW_SIZE; j++){
+                        index++;
+                        if (puzzle[i][j] == 0){
+                            blank[0] = i;
+                            blank[1] = j;
+                            //alert(index);
+                            return blank;
+                        }
+                    }
+                }
+                return blank;
+            }
+            
+            // check if this puzzle is solvable
+            function isSolvable(){
+                // count iversions in given 8 puzzle
+                var invCount = getInvCount();
+                // return true if inversion count is even.
+                return (invCount % 2 == 0);
+            }
+            
+            // get sum of iversions in the puzzle
+            function getInvCount(){
+
+                var invCount = 0;
+                var index = 0;
+                for (var i = 0; i < ROW_SIZE; i++){
+                    for (var j = 0; j < ROW_SIZE; j++){
+                        flag[index++] = puzzle[i][j];
+                    }
+                }
+                for (var i = 0; i < PUZZLE_SIZE; i++){
+                    for (var j = i + 1; j < PUZZLE_SIZE; j++){
+                        if (flag[i] > 0 && flag[j] > 0 && flag[i] > flag[j]){
+                            //alert("["+flag[i]+"] > ["+flag[j]+"]");
+                            invCount++;
+                        }
+                    }
+                }
+                //alert(invCount);
+                return invCount;
+            }
+            
+            /* H: Estimates distance to goal (Estimated number of
+             * steps taken from current state to goal state)
+             */
+            function calcH(arr){
+                var count = 0;
+                for (var i = 0; i < ROW_SIZE; i++){
+                    for (var j = 0; j < ROW_SIZE; j++){
+                        if (arr[i][j] > 0){
+                            count += calcG([i , j] , arr[i][j]);
+                        }
+                    }
+                }
+                //alert (count);
+                return count;
+            }
+            
+            // G: Cost (Number of steps taken to current state)
+            function calcG(currentState , value){
+                // find the currect position of this value
+                var currected_State = findCurrectPosition(currentState , value);
+                var count = 0;
+                       
+                // find how many steps this number is far from its currect position
+                while(currentState[0] != currected_State[0]){
+                    if (currentState[0] < currected_State[0]){
+                        currentState[0]++;
+                        count++;
+                    } else {
+                        currentState[0]--;
+                        count++;
+                    }
+                }
+
+                while (currentState[1] != currected_State[1]){
+                    if (currentState[1] < currected_State[1]){
+                        currentState[1]++;
+                        count++;
+                    } else {
+                        currentState[1]--;
+                        count++;
+                    }
+                }
+                return count;
+            }
+            
+            // find the currect position of this value
+            function findCurrectPosition(currentState , value){
+                var currected_State = [-1 , -1];
+                var count = 1;
+                // find the currect position of this value
+                for (var i = 0; i < ROW_SIZE; i++){
+                    for (var j = 0; j < ROW_SIZE; j++){
+                        if (count == value){
+                            currected_State[0] = i;
+                            currected_State[1] = j;
+                            return currected_State;
+                        }
+                        count++;
+                    }
+                }
+
+            }
+
+            // print puzzle
+            function printPuzzle(arr){
+
+                document.writeln("------------------------------------<br>")
+
+                document.write(arr[0][0] + " | " + arr[0][1] + " | "+ arr[0][2]+"<br>");
+
+                document.writeln(arr[1][0] + " | " + arr[1][1] + " | "+ arr[1][2]+"<br>");
+
+                document.writeln(arr[2][0] + " | " + arr[2][1] + " | "+ arr[2][2]+"<br>");
+            }
+            
+            // check if puzzle is solved
+            function isSolved(){
+                var value = 1;
+
+                if (puzzle[2][2] != 0){
+                    return false;
+                }
+
+                for (var i = 0; i < ROW_SIZE; i++){
+                    for (var j = 0; j < ROW_SIZE; j++){
+                        if (puzzle[i][j] > 0){
+                            if (puzzle[i][j] != value){
+                                return false;
+                            } else {
+                                value++;
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            // copy Array
+            function copyArray(arr1 , arr2){
+                for (var i = 0; i < ROW_SIZE; i++){
+                    for (var j = 0; j < ROW_SIZE; j++){
+                        arr1[i][j] = arr2[i][j];
+                    }
+                }
+            }
+
+            // find possibilities
+            function findPossibilities(blank){
+                var possibilities = "";
+                if (blank[0] == 0 && blank[1] == 0){
+                    possibilities = "right,down";
+                } else if (blank[0] == 0 && blank[1] == 1){
+                    possibilities = "left,right,down";
+                } else if (blank[0] == 0 && blank[1] == 2){
+                    possibilities = "left,down";
+                } else if (blank[0] == 1 && blank[1] == 0){
+                    possibilities = "up,right,down";
+                } else if (blank[0] == 1 && blank[1] == 1){
+                    possibilities = "up,left,right,down";
+                } else if (blank[0] == 1 && blank[1] == 2){
+                    possibilities = "up,left,down";
+                } else if (blank[0] == 2 && blank[1] == 0){
+                    possibilities = "up,right";
+                } else if (blank[0] == 2 && blank[1] == 1){
+                    possibilities = "left,up,right";
+                } else if (blank[0] == 2 && blank[1] == 2){
+                    possibilities = "left,up";
+                }
+
+                return possibilities;
+            }
+
+            // print possibilities
+            function printPossibilities(directions){
+                document.write("<br>Possibilities: ");
+                    
+                for (var i = 0; i < directions.length; i++){
+                    if (i < directions.length -1){
+                        document.write(directions[i]+" & ");
+                    } else {
+                        document.write(directions[i]);
+                    }
+                }
+                document.write("<br>------------------------------------<br>");
+            }
+
+            // check arrays equality
+            function isEquals(arr1 , arr2){
+                for (var i = 0; i < ROW_SIZE; i++){
+                    for (var j = 0; j < ROW_SIZE; j++){
+                        if (arr1[i][j] != arr2[i][j]){
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        </script>
+    </body>
+</html>

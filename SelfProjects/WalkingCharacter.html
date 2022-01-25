@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="description" content="Running Character">
+		<meta name="keywords" content="running character avoid poop ">
+		<meta name="author" content="Ron Sharabi">
+
+        <title>Walking Character</title>
+        <link rel="icon" type="png" href="images/icon.png">
+
+        <style>
+            #lvl{
+                position: absolute;
+                top: 0%;
+                right: 25%;
+                font-size: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="mycanvas" width="1000" height="600" style="border: 3px solid gray"></canvas>
+        <div id="lvl">Level: 1</div>
+        <button type="button" onclick="window.location.href='index.php'">Back To Menu</button>
+        <script>
+            var canvas = document.getElementById("mycanvas");
+            var ctx = canvas.getContext('2d');
+            var LVL = document.getElementById('lvl');
+
+            const CHARACTER_SOURCE = "images/Running.png"; // char image source
+            const CITY_SOURCE = "images/City.png"; // city image source
+            const POOP_SOURCE = "images/poop.png"; // poop image source
+            const NUMBER_OF_COLUMNS = 8; // number of frames (right <-> left) in char's image
+            const NUMBER_OF_ROWS = 2; // number of frames (up and down) in char's image
+            const NUMBER_OF_FRAMES = NUMBER_OF_COLUMNS*NUMBER_OF_ROWS; // sum number of frames in char's image
+            const FRAME_WIDTH = 864; // whole char's image width frame
+            const FRAME_HEIGHT = 280; // whole char's image height frame
+            const CHAR_FRAME_WIDTH = 864 / NUMBER_OF_COLUMNS; // char's image width per frame
+            const CHAR_FRAME_HEIGHT = 280 / NUMBER_OF_ROWS; // char's image height per frame
+            var cityX = 0; 
+            var runningRight = true; // flag that telling which direction the char is going
+            var charX = 0; // char's X in image frames spectrum
+            var charY = 0; // char's Y in image frames spectrum
+            var positionHeight = 350; // 2nd char's Y (using it to limit the range of the event listener)
+            var poopX = new Array(1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000); // poop's X
+            var poopY = new Array(400, 400, 400, 400, 400, 400, 400, 400, 400); // poop's Y
+            var countLVL1 = 0; // count how many times user passed level 1
+            var countLVL2 = 0; // count how many times user passed level 2
+            var countLVL3 = 0; // count how many times user passed level 3
+            var countLVL4 = 0; // count how many times user passed level 4
+            var countLVL5 = 0; // count how many times user passed level 5
+            var countLVL6 = 0;
+            var countLVL7 = 0;
+            var countLVL8 = 0;
+            document.addEventListener('keydown', direction); // event listener clickling keyboard
+
+            function direction(){ // even listener function - clicking the keybaord
+                if (event.keyCode == 39){ // run right
+                    runningRight = true;
+                    if (charY == CHAR_FRAME_HEIGHT){ // if char's Y really is on the second row of the image
+                        charY = 0; // than switch it to the first row in the image
+                    }
+                } else if (event.keyCode == 37){ // run left
+                    runningRight = false;
+                    if (charY == 0){ // if char's Y really is on the first row of the image
+                        charY = CHAR_FRAME_HEIGHT; // than switch it to the second row in the image
+                    }
+                } else if (event.keyCode == 38){ // run up
+                    if (positionHeight > 360){ // while char's Y is not crossing the sidewalk range
+                        positionHeight -= 10; // go up
+                    }
+                } else if (event.keyCode == 40){ // run down
+                    if (positionHeight < 460){ // while char's Y is not crossing the sidewalk range
+                        positionHeight += 10; // go down
+                    }
+                }
+            }
+
+            var char = new Image(); 
+            char.src = CHARACTER_SOURCE;
+            var city = new Image();
+            city.src = CITY_SOURCE;
+            var poop = new Image();
+            poop.src = POOP_SOURCE;
+
+            city.onload = function(){ // load city's image
+                setInterval(draw, 50); // execute draw function every 50 miliseconds 
+            }
+            
+
+            
+            function draw() { 
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.save();
+                    if (runningRight == true){ // if char is running right
+                        if (cityX > 0){ 
+                            ctx.translate(cityX-canvas.width, 0);
+                        } else {
+                            ctx.translate(cityX, 0);
+                        }
+                        ctx.drawImage(city, 0, 0, canvas.width, canvas.height); // draw city image
+                        ctx.drawImage(city, canvas.width, 0, canvas.width, canvas.height); // draw another city image from the right side of the first image ^(ling 80)
+                        cityX -= 10; // move city image left
+                        if (cityX < -canvas.width){
+                            cityX = 0;
+                        }
+                    } else { // if char is running left
+                        if (cityX < 0){
+                            ctx.translate(cityX+canvas.width, 0);
+                        } else {
+                            ctx.translate(cityX, 0);
+                        }
+                        ctx.drawImage(city, 0, 0, canvas.width, canvas.height); // draw city image
+                        ctx.drawImage(city, -canvas.width, 0, canvas.width, canvas.height); // draw anotger city image from the left side of the first image ^(line 92)
+                        cityX += 10; // move city image right
+                        if (cityX > canvas.width){
+                            cityX = 0;
+                        }
+                    }
+                ctx.restore();
+                
+                ctx.drawImage(poop, poopX[0], poopY[0], 40, 50); // draw poop's image
+                poopX[0] -= 10; // move poop[0] image to left
+                if (poopX[0] == 0){ // if poop[0]'s X is out of canvas's range (1000)
+                    poopY[0] = Math.floor(Math.random()*110) + 400; // dice new poop[0]'s Y *(in the sidewalk range)*
+                    poopX[0] = canvas.width; // move poop[0]'s X to right side of the canvas
+                }
+                if (countLVL1 >= 2){ // if user passed lvl 1 twice
+                    if (countLVL1 == 2){ // if user's lvl is 2
+                        LVL.innerHTML = "Level: 2"; // change div's text on html
+                    }
+                    ctx.drawImage(poop, poopX[1], poopY[1], 40, 50); // draw poop[1]
+                    poopX[1] -= 10; // move poop[1] image to left
+                    if (poopX[1] == 0){ // if poop[1]'s X is out of canvas's range (1000)
+                        poopY[1] = Math.floor(Math.random()*120) + 400; // dice new poop[1]'s Y *(in the sidewalk range)*
+                        poopX[1] = canvas.width; // move poop[1]'s X  to right side of the canvas
+                    }
+                }
+                if (countLVL2 >= 2){
+                    if (countLVL2 == 2){
+                        LVL.innerHTML = "Level: 3";
+                    }
+                    ctx.drawImage(poop, poopX[2], poopY[2], 40, 50);
+                    poopX[2] -= 10;
+                    if (poopX[2] == 0){
+                        poopY[2] = Math.floor(Math.random()*120) + 400;
+                        poopX[2] = canvas.width;
+                    }
+                }
+                if (countLVL3 >= 2){
+                    if (countLVL3 == 2){
+                        LVL.innerHTML = "Level: 4";
+                    }
+                    ctx.drawImage(poop, poopX[3], poopY[3], 40, 50);
+                    poopX[3] -= 10;
+                    if (poopX[3] == 0){
+                        poopY[3] = Math.floor(Math.random()*120) + 400;
+                        poopX[3] = canvas.width;
+                    }
+                }
+                if (countLVL4 >= 2){
+                    if (countLVL4 == 2){
+                        LVL.innerHTML = "Level: 5";
+                    }
+                    ctx.drawImage(poop, poopX[4], poopY[4], 40, 50);
+                    poopX[4] -= 10;
+                    if (poopX[4] == 0){
+                        poopY[4] = Math.floor(Math.random()*120) + 400;
+                        poopX[4] = canvas.width;
+                    }
+                }
+                if(countLVL5 >= 2){
+                    if (countLVL5 == 2){
+                        LVL.innerHTML = "Level: 6";
+                    }
+                    ctx.drawImage(poop, poopX[5], poopY[5], 40, 50);
+                    poopX[5] -= 10;
+                    if (poopX[5] == 0){
+                        poopY[5] = Math.floor(Math.random()*120) + 400;
+                        poopX[5] = canvas.width;
+                    }
+                }
+                if (countLVL6 >= 2){
+                    if (countLVL6 == 2){
+                        LVL.innerHTML = "Level: 7";
+                    }
+                    ctx.drawImage(poop, poopX[6], poopY[6], 40, 50);
+                    poopX[6] -= 10;
+                    if (poopX[6] == 0){
+                        poopY[6] = Math.floor(Math.random()*120) + 400;
+                        poopX[6] = canvas.width;
+                    }
+                }
+                if (countLVL7 >= 2){
+                    if (countLVL7 == 2){
+                        LVL.innerHTML = "Level: 8";
+                    }
+                    ctx.drawImage(poop, poopX[7], poopY[7], 40, 50);
+                    poopX[7] -= 10;
+                    if (poopX[7] == 0){
+                        poopY[7] = Math.floor(Math.random()*120) + 400;
+                        poopX[7] = canvas.width;
+                    }
+                }
+                if (countLVL8 >= 2){
+                    if (countLVL8 == 2){
+                        LVL.innerHTML = "Level: 9";
+                    }
+                    ctx.drawImage(poop, poopX[8], poopY[8], 40, 50);
+                    poopX[8] -= 10;
+                    if (poopX[8] == 0){
+                        poopY[8] = Math.floor(Math.random()*120) + 400;
+                        poopX[8] = canvas.width;
+                    }
+                }
+                ctx.drawImage(char, charX, charY, CHAR_FRAME_WIDTH, CHAR_FRAME_HEIGHT, 450, positionHeight, 0.8 * CHAR_FRAME_WIDTH, 0.8 * CHAR_FRAME_HEIGHT); // draw char's image
+                charX += CHAR_FRAME_WIDTH; // move char's frame in the image to the next right frame in the image
+                if (charX == FRAME_WIDTH){ // if char's frame is the last frame in the image from right
+                    charX = 0; // move char's frame to the most left frame in the image
+                }
+
+                var tmpPoopY = new Array(poopY[0]-50, poopY[1]-50, poopY[2]-50, poopY[3]-50, poopY[4]-50, poopY[5]-50, poopY[6]-50, poopY[7]-50, poopY[8]-50); // build tmp poop Y
+
+                if (poopX[0] == 450){ // if poop[0]'s Y and char's Y is equal
+                    countLVL1++;
+
+                    if (positionHeight < tmpPoopY[0]){ // if char's Y is lower than tmpPoopY[0]
+                        if (positionHeight >= tmpPoopY[0]-30){ // if char's Y is greater than tmpPoopY[0] - 40)
+                            alert("poop 1 : Fail 111"); // alert kind of Fail
+                            window.location.href = "failed.html"; // move user to Failed page
+                        }
+                    } else if ( positionHeight == tmpPoopY[0]){ // if char's Y and tmPoopY is equal
+                            alert("poop 1 : Fail 222") // alert kind of Fail
+                            window.location.href = "failed.html"; // move user to Failed page
+                    }
+                    
+                }
+                if (poopX[1] == 450){
+                    countLVL2++;
+                   
+                    if (positionHeight < tmpPoopY[1]){ // if char's Y is lower than tmpPoopY[1]
+                        if (positionHeight >= tmpPoopY[1]-30){ // if char's Y is greater than tmpPoopY[1] - 40)
+                            alert("poop 2 : Fail 111"); // alert kind of Fail
+                            window.location.href = "failed.html"; // move user to Failed page
+                        }
+                    } else if (positionHeight == tmpPoopY[1]){ // if char's Y and tmPoopY is equal
+                        alert("poop 2 : Fail 222"); // alert kind of Fail
+                        window.location.href = "failed.html"; // move user to Failed page
+                    }
+                }
+
+                if (poopX[2] == 450){
+                    countLVL3++;
+                   
+                    if (positionHeight < tmpPoopY[2]){
+                        if(positionHeight >= tmpPoopY[2]-30){
+                            alert("poop 3 : Fail 111")
+                            window.location.href = "failed.html";
+                        }
+                    } else if (positionHeight == tmpPoopY[2]){
+                        alert("poop 3 : Fail 222");
+                        window.location.href = "failed.html";
+                    }
+                }
+
+                if (poopX[3] == 450){
+                    countLVL4++;
+                    
+                    if(positionHeight < tmpPoopY[3]){
+                        if(positionHeight >= tmpPoopY[3]-30){
+                            alert("poop 4 : Fail 111");
+                            window.location.href = "failed.html";
+                        }
+                    } else if (positionHeight == tmpPoopY[3]){
+                        alert("poop 4 : Fail 222");
+                        window.location.href = "failed.html";
+                    }
+                }
+
+                if (poopX[4] == 450){
+                    countLVL5++;
+                   
+                    if(positionHeight < tmpPoopY[4]){
+                        if(positionHeight >= tmpPoopY[4]-40){
+                            alert("poop 5 : Fail 111");
+                            window.location.href = "failed.html";
+                        }
+                    } else if (positionHeight == tmpPoopY[4]){
+                        alert("poop 5 : Fail 222");
+                        window.location.href = "failed.html";
+                    }
+                }
+                if (poopX[5] == 450){
+                    countLVL6++;
+                    
+                    if(positionHeight < tmpPoopY[5]){
+                        if(positionHeight >= tmpPoopY[5]-40){
+                            alert("poop 6 : Fail 111");
+                            window.location.href = "failed.html";
+                        }
+                    } else if (positionHeight == tmpPoopY[5]){
+                        alert("poop 6 : Fail 222");
+                        window.location.href = "failed.html";
+                    }
+                }
+                if (poopX[6] == 450){
+                    countLVL7++;
+                    
+                    if(positionHeight < tmpPoopY[6]){
+                        if(positionHeight >= tmpPoopY[6]-40){
+                            alert("poop 7 : Fail 111");
+                            window.location.href = "failed.html";
+                            
+                        }
+                    } else if (positionHeight == tmpPoopY[6]){
+                        alert("poop 7 : Fail 222");
+                        window.location.href = "failed.html";
+                    }
+                }
+                if (poopX[7] == 450){
+                    countLVL8++;
+                    if(positionHeight < tmpPoopY[7]){
+                        if(positionHeight >= tmpPoopY[7]-40){
+                            alert("poop 8 : Fail 111");
+                            window.location.href = "failed.html";  
+                        }
+                    } else if (positionHeight == tmpPoopY[7]){
+                        alert("poop 8 : Fail 222");
+                        window.location.href = "failed.html";
+                    }
+                }
+                if (poopX[8] == 450){
+                    if(positionHeight < tmpPoopY[8]){
+                        if(positionHeight >= tmpPoopY[8]-40){
+                            alert("poop 9 : Fail 111");
+                            window.location.href = "failed.html";
+                        }
+                    } else if (positionHeight == tmpPoopY[8]){
+                        alert("poop 9 : Fail 222");
+                        window.location.href = "failed.html";
+                    }
+                }
+            }
+            
+        
+                
+        </script>
+    </body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="description" content="Running away from the police">
+		<meta name="keywords" content="running away police chase bike">
+		<meta name="author" content="Ron Sharabi">
+
+        <title>Lets run</title>
+        <link rel="icon" type="png" href="images/motor.png">
+
+        <Style>
+            #tv{
+                position: absolute;
+                right: 20%;
+                top: 0%;
+                font-size: 50px;
+            }
+            #back{
+                position: absolute;
+                right: 20%;
+                top: 30%;
+                font-size: 20px;
+                background-color: greenyellow;
+            }
+        </Style>
+    </head>
+
+    <body>
+        <canvas id="mycanvas" width="1000" height="600" style="border: 3px solid gray"></canvas>
+        <p id="tv">0:0:0</p>
+
+        <audio id="myAudio" controls autoplay>
+            <source src="soundTrack.mp3" type="audio/mpeg">
+        </audio>
+
+        <p id="demo"></p>
+        <button type="button" id="back" onclick="window.location.href='index.php'">Back To Menu</button>
+        <script>
+            var canvas = document.getElementById('mycanvas');
+            var ctx = canvas.getContext('2d');
+            
+            var x = document.getElementById("myAudio");
+            x.autoplay = true;
+            var play = false;
+
+            const CITY_SOURCE = "images/city2.png";
+            const BIKE_SOURCE = "images/bike.png";
+            const ENEMY_SOURCE = "images/enemy.png";
+            //--------------------------------------------
+            const NUMBER_OF_COLUMNS = 7; // number of frames in each row in bike's image
+            const NUMBER_OF_ROWS = 6; // number of frames in each column in bike's image
+            const NUMBER_OF_FRAMES = NUMBER_OF_COLUMNS*NUMBER_OF_ROWS; // sum number of frames in bike's image
+            const FRAME_WIDTH = 868; // whole bike's image width frame
+            const FRAME_HEIGHT = 372; // whole bike's image height frame
+            const BIKE_FRAME_WIDTH = FRAME_WIDTH / NUMBER_OF_COLUMNS; // bike's image width per frame
+            const BIKE_FRAME_HEIGHT = FRAME_HEIGHT / NUMBER_OF_ROWS; // bike's image height per frame
+            var runningRight = true;
+            var cityX = 0;
+            var bikeX = 0; // bike's X in image frames
+            var bikeY = 0; // bike's Y in image frames
+            var positionHeight = 490; // 2nd bike's Y (using it to limit the range of the event listener('keydown'))
+
+            document.addEventListener('keydown', direction); // event listener
+
+            function direction(){ // even listener function - clicking the keybaord
+                if (event.keyCode == 39){ // run right
+                    runningRight = true;
+                    if (bikeY == BIKE_FRAME_HEIGHT){ // if bike's Y really is on the second row of the image
+                        bikeY = 0; // than switch it to the first row in the image
+                    }
+                } else if (event.keyCode == 37){ // run left
+                    runningRight = false;
+                    if (bikeY == 0){ // if bike's Y really is on the first row of the image
+                        bikeY = BIKE_FRAME_HEIGHT; // than switch it to the second row in the image
+                    }
+                } else if (event.keyCode == 38){ // run up
+                    if (positionHeight > 470){ // while bike's Y is not crossing the limited range
+                        positionHeight -= 10; // go up
+                    }
+                } else if (event.keyCode == 40){ // run down
+                    if (positionHeight < 540){ // while bike's Y is not crossing the limited range
+                        positionHeight += 10; // go down
+                        if (play == false){ // if audio is not playing 
+                            x.load(); // play audio
+                            play = true; // sign flag as playing
+                        }
+                    }
+                }
+            }
+            var sec = 0, min = 0, hr = 0; // clock second, minute and hour values
+            setInterval(start, 1000); // set clock to switch value every 1 second
+            function start() { // activate clock
+                sec++; // add 1 second
+                if (sec > 59){ // if second is greater than 59
+                    min++; // add 1 minute
+                    sec = 0; // reset second to 0
+                }
+                if (min > 59){ // if minute is greater than 59
+                    hr++; // add 1 hour
+                    min = 0; // reset minute to 0
+                }
+                if (hr > 23){ // hr is greater than 23
+                    sec = 0, min = 0, hr = 0; // reset all clock's values to 0
+                }
+                tv.innerHTML = hr+":"+min+":"+sec; // print
+            }
+            
+
+            var enemy = new Image();
+            enemy.src = ENEMY_SOURCE;
+            var bike = new Image();
+            bike.src = BIKE_SOURCE;
+            var city = new Image();
+            city.src = CITY_SOURCE;
+            
+
+            function Enemy (){ // Police object
+                this.x = 900; // object X
+                this.y = 490; // object Y
+                this.lvl = 0; // lvl counter (how many times user passed this level)
+                this.move = function(){ // activate object
+                    this.x -= 10; // move object to left
+                    this.lvl++; // raise lvl by 1
+                    ctx.drawImage(enemy, this.x, this.y, 80, 60); // display object
+                    if (this.x == 0){ // if object is in the left side of the canvas
+                        this.y = Math.floor(Math.random()*70) + 470; // dice a new Y to the object
+                        this.x = canvas.width; // and move the object to the right side of the canvas
+                    }
+                }
+                this.check = function(){ //check collide possibility
+                    if (this.x == 520){ // if object and and bike on the X
+                        if (positionHeight-BIKE_FRAME_HEIGHT < this.y-60 ){ // if object Y is greater than bike's Y
+                            if (positionHeight-BIKE_FRAME_HEIGHT + 15 < this.y - 60){ // if object Y greater than bike's Y
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
+                }    
+            }
+
+            var police1 = new Enemy(); // object 1
+            var police2 = new Enemy(); // object 2
+            var police3 = new Enemy(); // ......
+            var police4 = new Enemy();
+            var police5 = new Enemy();
+            var police6 = new Enemy();
+            var police7 = new Enemy();
+            var police8 = new Enemy();
+            var police9 = new Enemy();
+            var police10 = new Enemy();
+            var police11 = new Enemy();
+            var police12 = new Enemy();
+            var police13 = new Enemy();
+            
+            var let2move = false; // flag that signing the right time to activate object
+            var let3move = false;
+            var let4move = false;
+            var let5move = false;
+            var let6move = false;
+            var let7move = false;
+            var let8move = false;
+            var let9move = false;
+            var let10move = false;
+            var let11move = false;
+            var let12move = false;
+            var let13move = false;
+            
+
+            
+            city.onload = function(){ // load city image
+                setInterval(draw, 50); // execute draw function every 50 miliseconds
+            }
+
+            function draw(){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.save();
+                    if (runningRight == true){ // if char is running right
+                        if (cityX > 0){ 
+                            ctx.translate(cityX-canvas.width, 0);
+                        } else {
+                            ctx.translate(cityX, 0);
+                        }
+                        ctx.drawImage(city, 0, 0, canvas.width, canvas.height); // draw city image
+                        ctx.drawImage(city, canvas.width, 0, canvas.width, canvas.height); // draw another city image from the right side of the first image 
+                        cityX -= 10; // move city image left
+                        if (cityX < -canvas.width){
+                            cityX = 0;
+                        }
+                    } else { // if char is running left
+                        if (cityX < 0){
+                            ctx.translate(cityX+canvas.width, 0);
+                        } else {
+                            ctx.translate(cityX, 0);
+                        }
+                        ctx.drawImage(city, 0, 0, canvas.width, canvas.height); // draw city image
+                        ctx.drawImage(city, -canvas.width, 0, canvas.width, canvas.height); // draw anotger city image from the left side of the first image
+                        cityX += 10; // move city image right
+                        if (cityX > canvas.width){
+                            cityX = 0;
+                        }
+                    }
+                ctx.restore();
+                
+            
+
+
+                police1.move(); // activate first object
+                if (police1.check() == true){ // if bike collided the object
+                    bikeY += BIKE_FRAME_HEIGHT*4; // move bike Y to crashing row
+                    bikeX = 0; // move bike Y to first column
+                }
+                if (police1.lvl >= 2 && police1.x < 500){ // if first object lvl is greater than 2 AND first object is on X(500)
+                    let2move = true; // activate second object
+                }
+                if (let2move == true){
+                    police2.move();
+                    if (police2.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police2.lvl >= 2 && police2.x < 500){
+                    let3move = true;
+                }
+                if (let3move == true){
+                    police3.move();
+                    if (police3.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police3.lvl >= 2 && police3.x < 500){
+                    let4move = true;
+                }
+                if (let4move == true){
+                    police4.move();
+                    if (police4.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police4.lvl >= 2 && police4.x < 500){
+                    let5move = true;
+                }
+                if (let5move == true){
+                    police5.move();
+                    if (police5.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police5.lvl >= 2 && police5.x < 500){
+                    let6move = true;
+                }
+                if (let6move == true){
+                    police6.move();
+                    if (police6.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police6.lvl >= 2 && police6.x < 500){
+                    let7move = true;
+                }
+                if (let7move == true){
+                    police7.move();
+                    if (police7.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police7.lvl >= 2 && police7.x < 500){
+                    let8move = true;
+                }
+                if (let8move == true){
+                    police8.move();
+                    if (police8.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police8.lvl >= 2 && police8.x < 500){
+                    let9move = true;
+                }
+                if (let9move == true){
+                    police9.move();
+                    if (police9.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police9.lvl >= 2 && police9.x < 500){
+                    let9move = true;
+                }
+                if (let10move == true){
+                    police10.move();
+                    if (police10.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police10.lvl >= 2 && police10.x < 500){
+                    let11move = true;
+                }
+                if (let11move == true){
+                    police11.move();
+                    if (police11.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police11.lvl >= 2 && police11.x < 500){
+                    let12move = true;
+                }
+                if (let12move == true){
+                    police12.move();
+                    if (police12.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+                if (police12.lvl >= 2 && police12.x < 500){
+                    let13move = true;
+                }
+                if (let13move == true){
+                    police13.move();
+                    if (police13.check() == true){
+                        bikeY += BIKE_FRAME_HEIGHT*4;
+                        bikeX = 0;   
+                    }
+                }
+
+                ctx.drawImage(bike, bikeX, bikeY, BIKE_FRAME_WIDTH, BIKE_FRAME_HEIGHT, 450, positionHeight, BIKE_FRAME_WIDTH, BIKE_FRAME_HEIGHT); // draw bike image
+                bikeX += BIKE_FRAME_WIDTH; // move bike frame in the image to the next right frame in the image
+                if(bikeY == BIKE_FRAME_HEIGHT*4  && bikeX > FRAME_WIDTH || bikeY == BIKE_FRAME_HEIGHT*5 && bikeX > FRAME_WIDTH){
+                    window.location.href = "wasted.html";
+                }
+                if (bikeX == FRAME_WIDTH && bikeY == 0 || bikeX == FRAME_WIDTH && bikeY == BIKE_FRAME_HEIGHT){ // if bike frame is the last frame in the image from right
+                    bikeX = 0; // move bike frame to the most left frame in the image
+                }
+                
+            }
+        </script>
+    </body>
+</html>

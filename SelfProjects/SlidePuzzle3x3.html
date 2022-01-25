@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="description" content="Ron's projects - Number Arrange Puzzle">
+		<meta name="keywords" content="Number Arrange Puzzle">
+		<meta name="author" content="Ron Sharabi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Slide Puzzle 3x3</title>
+        <style>
+            #puzzleArea{
+                text-align: center;
+            }
+            input{
+                width: 100px;
+                height: 100px;
+                border: 5px inset brown;
+                background-color: burlywood;
+                font-size: 60px;
+            }
+            
+        </style>
+    </head>    
+
+    <body>
+
+        <div id="puzzleArea">
+            <h1>Number Arrange Puzzle</h1>
+            <br><br>
+            <input id="cell0-0" type="button" onclick="move(this.id)" value="">
+            <input id="cell0-1" type="button" onclick="move(this.id)" value="">
+            <input id="cell0-2" type="button" onclick="move(this.id)" value="">
+            <br>
+            <input id="cell1-0" type="button" onclick="move(this.id)" value="">
+            <input id="cell1-1" type="button" onclick="move(this.id)" value="">
+            <input id="cell1-2" type="button" onclick="move(this.id)" value="">
+            <br>
+            <input id="cell2-0" type="button" onclick="move(this.id)" value="">
+            <input id="cell2-1" type="button" onclick="move(this.id)" value="">
+            <input id="cell2-2" type="button" onclick="move(this.id)" value="">
+            <p id="moves">Moves: </p>
+        </div>
+
+        <script>
+
+            const PUZZLE_SIZE = 9;
+            const PUZZLE_ROW = 3;
+            var countMoves = 0;
+            var moves = document.getElementById('moves');
+            moves.innerHTML = "Moves: "+countMoves;
+            // puzzle grid
+            var puzzle =[
+                [0,0,0],
+                [0,0,0],
+                [0,0,0]
+            ];
+            // flag array
+            var flag = [0,0,0,0,0,0,0,0,0];
+            // grid is DOM collection of the puzzle
+            var grid = new Array(PUZZLE_ROW);
+            for (var i = 0; i < PUZZLE_SIZE; i++){
+                grid[i] = new Array(PUZZLE_ROW);
+                for (var j = 0; j < PUZZLE_ROW; j++){
+                    grid[i][j] = document.getElementById("cell"+i+"-"+j);
+                }
+            }
+            // insert random numbers into puzzle
+            randomPuzzle();
+            //alertPuzzle();
+            // insert puzzle into DOM puzzle buttons
+            InsertValuesIntoButtons();
+            
+            function move(id){
+                var row = parseInt(id.substring(4, 5));
+                var col = parseInt(id.substring(6));
+                
+                //alert(row + "   "+ col);
+
+                // track emptySpot
+                var emptySpot = [-1 , -1];
+                for (var i = 0; i < PUZZLE_ROW; i++){
+                    for (var j = 0; j < PUZZLE_ROW; j++){
+                        if (puzzle[i][j] == 0){
+                            emptySpot[0] = i;
+                            emptySpot[1] = j;
+                            break;
+                        }
+                    }
+                    if (emptySpot[0] > -1){break;}
+                }
+
+                // if clicked button above empty button , swap
+                if (row+1 == emptySpot[0] && col == emptySpot[1]){
+                    
+                    puzzle[emptySpot[0]][emptySpot[1]] = puzzle[row][col];
+                    puzzle[row][col] = 0;
+                    countMoves++;
+                    grid[row][col].value = "E";
+                    grid[row][col].style.backgroundColor = "grey";
+                    grid[emptySpot[0]][emptySpot[1]].value = puzzle[emptySpot[0]][emptySpot[1]];
+                    grid[emptySpot[0]][emptySpot[1]].style.backgroundColor = "burlywood";
+
+                } else if (row-1 == emptySpot[0] && col == emptySpot[1]){
+                    // if clicked button below empty button , swap
+                    puzzle[emptySpot[0]][emptySpot[1]] = puzzle[row][col];
+                    puzzle[row][col] = 0;
+                    countMoves++;
+                    grid[row][col].value = "E";
+                    grid[row][col].style.backgroundColor = "grey";
+                    grid[emptySpot[0]][emptySpot[1]].value = puzzle[emptySpot[0]][emptySpot[1]];
+                    grid[emptySpot[0]][emptySpot[1]].style.backgroundColor = "burlywood";
+
+                } else if (row == emptySpot[0] && col+1 == emptySpot[1]){
+                    // if clicked button from the left of empty button , swap
+                    puzzle[emptySpot[0]][emptySpot[1]] = puzzle[row][col];
+                    puzzle[row][col] = 0;
+                    countMoves++;
+                    grid[row][col].value = "E";
+                    grid[row][col].style.backgroundColor = "grey";
+                    grid[emptySpot[0]][emptySpot[1]].value = puzzle[emptySpot[0]][emptySpot[1]];
+                    grid[emptySpot[0]][emptySpot[1]].style.backgroundColor = "burlywood";
+
+                } else if (row == emptySpot[0] && col-1 == emptySpot[1]){
+                    // if clicked button from the right of empty button , swap
+                    puzzle[emptySpot[0]][emptySpot[1]] = puzzle[row][col];
+                    puzzle[row][col] = 0;
+                    countMoves++;
+                    grid[row][col].value = "E";
+                    grid[row][col].style.backgroundColor = "grey";
+                    grid[emptySpot[0]][emptySpot[1]].value = puzzle[emptySpot[0]][emptySpot[1]];
+                    grid[emptySpot[0]][emptySpot[1]].style.backgroundColor = "burlywood";
+
+                }
+                moves.innerHTML = "Moves: "+countMoves;
+            }
+
+            function InsertValuesIntoButtons(){
+                for (var i = 0; i < 3; i++){
+                    for (var j = 0; j < 3; j++){
+                        if (puzzle[i][j] == 0){
+                            grid[i][j].value = "E";
+                            grid[i][j].style.backgroundColor = 'grey';
+                            continue;
+                        }
+                        grid[i][j].value = puzzle[i][j];
+                        grid[i][j].style.backgroundColor = 'burlywood';
+                    }
+                }
+                if (!isSolvable()){
+                    randomPuzzle();
+                    InsertValuesIntoButtons();
+                }
+            }
+
+            function randomPuzzle(){
+                var flag = new Array(PUZZLE_SIZE);
+                for (var i = 0; i < PUZZLE_SIZE; i++){
+                    flag[i] = Math.floor(Math.random() * 9);
+                    for (var j = 0; j < i; j++){
+                        if (flag[i] == flag[j]){
+                            i--;
+                            break;
+                        }
+                    }
+                }
+
+                var k = 0;
+
+                for (var i = 0; i < PUZZLE_ROW; i++){
+                    for (var j = 0; j < PUZZLE_ROW; j++){
+                        puzzle[i][j] = flag[k++];
+                    }
+                }
+            }
+
+            function isSolvable(){
+                // count iversions in given 8 puzzle
+                var invCount = getInvCount();
+                // return true if inversion count is even.
+                return (invCount % 2 == 0);
+            }
+
+            function getInvCount(){
+                var invCount = 0;
+                var index = 0;
+                for (var i = 0; i < PUZZLE_ROW; i++){
+                    for (var j = 0; j < PUZZLE_ROW; j++){
+                        flag[index++] = puzzle[i][j];
+                    }
+                }
+                for (var i = 0; i < PUZZLE_SIZE; i++){
+                    for (var j = i + 1; j < PUZZLE_SIZE; j++){
+                        if (flag[i] > 0 && flag[j] > 0 && flag[i] > flag[j]){
+                            //alert("["+flag[i]+"] > ["+flag[j]+"]");
+                            invCount++;
+                        }
+                    }
+                }
+                //alert(invCount);
+                return invCount;
+            }
+
+            function alertPuzzle(){
+                var msg = "";
+                for (var i = 0; i < PUZZLE_ROW; i++){
+                    for (var j = 0; j < PUZZLE_ROW; j++){
+                        msg += puzzle[i][j]+" ";
+                    }
+                    msg += '\n'
+                }
+                alert(msg);
+            }
+            
+
+        </script>
+    </body>
+</html>

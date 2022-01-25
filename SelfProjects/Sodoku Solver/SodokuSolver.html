@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="description" content="Ron's projects - Sodoku Solver">
+		<meta name="keywords" content="Sodoku Solver">
+		<meta name="author" content="Ron Sharabi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Sodoku Solver</title>
+        <link rel="icon" type="png" href="images/SodokuSolverIcon.png">
+
+        <link href="style.css" rel="stylesheet" type="text/css">
+        
+    </head>
+    <body>
+        
+        <h1 style="text-align: center;">Sodoku Solver</h1>
+        <div id="gridArea" style="text-align: center;">
+            <input id = "i0-0" type="text" maxlength="1">
+            <input id = "i0-1" type="text" maxlength="1">
+            <input id = "i0-2" type="text" maxlength="1">
+            <input id = "i0-3" type="text" maxlength="1">
+            <input id = "i0-4" type="text" maxlength="1">
+            <input id = "i0-5" type="text" maxlength="1">
+            <input id = "i0-6" type="text" maxlength="1">
+            <input id = "i0-7" type="text" maxlength="1">
+            <input id = "i0-8" type="text" maxlength="1">
+            <br>
+            <input id = "i1-0" type="text" maxlength="1">
+            <input id = "i1-1" type="text" maxlength="1">
+            <input id = "i1-2" type="text" maxlength="1">
+            <input id = "i1-3" type="text" maxlength="1">
+            <input id = "i1-4" type="text" maxlength="1">
+            <input id = "i1-5" type="text" maxlength="1">
+            <input id = "i1-6" type="text" maxlength="1">
+            <input id = "i1-7" type="text" maxlength="1">
+            <input id = "i1-8" type="text" maxlength="1">
+            <br>
+            <input id = "i2-0" type="text" maxlength="1">
+            <input id = "i2-1" type="text" maxlength="1">
+            <input id = "i2-2" type="text" maxlength="1">
+            <input id = "i2-3" type="text" maxlength="1">
+            <input id = "i2-4" type="text" maxlength="1">
+            <input id = "i2-5" type="text" maxlength="1">
+            <input id = "i2-6" type="text" maxlength="1">
+            <input id = "i2-7" type="text" maxlength="1">
+            <input id = "i2-8" type="text" maxlength="1">
+            <br>
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <input id = "i3-0" type="text" maxlength="1">
+            <input id = "i3-1" type="text" maxlength="1">
+            <input id = "i3-2" type="text" maxlength="1">
+            <input id = "i3-3" type="text" maxlength="1">
+            <input id = "i3-4" type="text" maxlength="1">
+            <input id = "i3-5" type="text" maxlength="1">
+            <input id = "i3-6" type="text" maxlength="1">
+            <input id = "i3-7" type="text" maxlength="1">
+            <input id = "i3-8" type="text" maxlength="1">
+            <br>
+            <input id = "i4-0" type="text" maxlength="1">
+            <input id = "i4-1" type="text" maxlength="1">
+            <input id = "i4-2" type="text" maxlength="1">
+            <input id = "i4-3" type="text" maxlength="1">
+            <input id = "i4-4" type="text" maxlength="1">
+            <input id = "i4-5" type="text" maxlength="1">
+            <input id = "i4-6" type="text" maxlength="1">
+            <input id = "i4-7" type="text" maxlength="1">
+            <input id = "i4-8" type="text" maxlength="1">
+            <br>
+            <input id = "i5-0" type="text" maxlength="1">
+            <input id = "i5-1" type="text" maxlength="1">
+            <input id = "i5-2" type="text" maxlength="1">
+            <input id = "i5-3" type="text" maxlength="1">
+            <input id = "i5-4" type="text" maxlength="1">
+            <input id = "i5-5" type="text" maxlength="1">
+            <input id = "i5-6" type="text" maxlength="1">
+            <input id = "i5-7" type="text" maxlength="1">
+            <input id = "i5-8" type="text" maxlength="1">
+            <br>
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <input id = "i6-0" type="text" maxlength="1">
+            <input id = "i6-1" type="text" maxlength="1">
+            <input id = "i6-2" type="text" maxlength="1">
+            <input id = "i6-3" type="text" maxlength="1">
+            <input id = "i6-4" type="text" maxlength="1">
+            <input id = "i6-5" type="text" maxlength="1">
+            <input id = "i6-6" type="text" maxlength="1">
+            <input id = "i6-7" type="text" maxlength="1">
+            <input id = "i6-8" type="text" maxlength="1">
+            <br>
+            <input id = "i7-0" type="text" maxlength="1">
+            <input id = "i7-1" type="text" maxlength="1">
+            <input id = "i7-2" type="text" maxlength="1">
+            <input id = "i7-3" type="text" maxlength="1">
+            <input id = "i7-4" type="text" maxlength="1">
+            <input id = "i7-5" type="text" maxlength="1">
+            <input id = "i7-6" type="text" maxlength="1">
+            <input id = "i7-7" type="text" maxlength="1">
+            <input id = "i7-8" type="text" maxlength="1">
+            <br>
+            <input id = "i8-0" type="text" maxlength="1">
+            <input id = "i8-1" type="text" maxlength="1">
+            <input id = "i8-2" type="text" maxlength="1">
+            <input id = "i8-3" type="text" maxlength="1">
+            <input id = "i8-4" type="text" maxlength="1">
+            <input id = "i8-5" type="text" maxlength="1">
+            <input id = "i8-6" type="text" maxlength="1">
+            <input id = "i8-7" type="text" maxlength="1">
+            <input id = "i8-8" type="text" maxlength="1">
+            <br>
+            <button id="solve" onclick="loadValues()">Solve</button>
+            <button onclick="Reset()">Reset</button>
+            <br>
+            <button onclick="window.location.href='../index.php'">Menu</button>
+            <p id="invalid"></p>
+        </div>
+        <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>

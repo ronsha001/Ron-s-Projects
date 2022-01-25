@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="description" content="Convertor">
+		<meta name="keywords" content="number base convertor">
+		<meta name="author" content="Ron Sharabi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Convertor</title>
+
+        <style>
+            body {
+                background-image: url("images/conv.jpg");
+                background-size: 100% 100%;
+            }
+            h1{
+                text-align: center;
+                background-color: turquoise;
+                
+            }
+            p{
+                text-align: center;
+                font-size: 30px;
+                background-color: turquoise;
+
+            }
+            #dec{
+                background-color: turquoise;
+                position: absolute;
+                right: 58.5%;
+                bottom: 72.5%;
+                font-size: 30px;
+            }
+            #bin{
+                background-color: turquoise;
+                font-size: 20px;
+                position: absolute;
+                right: 58.5%;
+                bottom: 64.3%;
+                font-size: 30px;
+            }
+            #hex{
+                background-color: turquoise;
+                font-size: 20px;
+                position: absolute;
+                right: 58.5%;
+                bottom: 55.3%;
+                font-size: 30px;
+            }
+            #oct{
+                background-color: turquoise;
+                font-size: 20px;
+                position: absolute;
+                right: 58.5%;
+                bottom: 46%;
+                font-size: 30px;
+            }
+            #goBack{
+                background-color: turquoise;
+                font-size: 20px;
+                position: absolute;
+                right: 42.5%;
+                bottom: 10%;
+                font-size: 30px;
+            }
+            #res{
+                background-color: turquoise;
+                font-size: 20px;
+                position: absolute;
+                right: 48.4%;
+                bottom: 35%;
+                font-size: 30px;
+            }
+            #decimal{
+                
+                margin: 10px;
+                padding: 10px;
+                text-align: center;
+                position: absolute;
+                right: 45%;
+            }
+            #binary{
+                margin: 10px;
+                padding: 10px;
+                text-align: center;
+                position: absolute;
+                right: 45%;
+                bottom: 62%;
+            }
+            #hexa{
+                margin: 10px;
+                padding: 10px;
+                text-align: center;
+                position: absolute;
+                right: 45%;
+                bottom: 53%;
+            }
+            #octal{
+                margin: 10px;
+                padding: 10px;
+                text-align: center;
+                position: absolute;
+                right: 45%;
+                bottom: 44%;
+            }
+            #calcDec{
+                text-align: center;
+                position: absolute;
+                right: 37%;
+                bottom: 73%;
+            }
+            #calcBin{
+                text-align: center;
+                position: absolute;
+                right: 37.7%;
+                bottom: 65%;
+            }
+            #calcHex{
+                text-align: center;
+                position: absolute;
+                right: 38.1%;
+                bottom: 56%;
+            }
+            #calcOct{
+                text-align: center;
+                position: absolute;
+                right: 38.1%;
+                bottom: 47%;
+            }
+            @media only screen and (max-width: 500px){
+                #dec{
+                    background-color: turquoise;
+                    position: absolute;
+                    width: 110px;
+                    margin: 5px;
+                    left: 0%;
+                    bottom: 46%;
+                    font-size: 30px;
+                }
+                #bin{
+                    background-color: turquoise;
+                    position: absolute;
+                    width: 110px;
+                    margin: 5px;
+                    left: 0%;
+                    bottom: 39%;
+                    font-size: 30px;
+                }
+                #hex{
+                    background-color: turquoise;
+                    position: absolute;
+                    width: 110px;
+                    margin: 5px;
+                    left: 0%;
+                    bottom: 32%;
+                    font-size: 30px;
+                }
+                #oct{
+                    background-color: turquoise;
+                    position: absolute;
+                    width: 110px;
+                    margin: 5px;
+                    left: 0%;
+                    bottom: 25%;
+                    font-size: 30px;
+                }
+                #decimal{
+                    margin: 5px;
+                    width: 110px;
+                    text-align: center;
+                    position: absolute;
+                    right: 27%;
+                    bottom: 46%;
+                }
+                #binary{
+                    margin: 5px;
+                    width: 110px;
+                    text-align: center;
+                    position: absolute;
+                    right: 27%;
+                    bottom: 39%;
+                }
+                #hexa{
+                    margin: 5px;
+                    width: 110px;
+                    text-align: center;
+                    position: absolute;
+                    right: 27%;
+                    bottom: 32%;
+                }
+                #octal{
+                    margin: 5px;
+                    width: 110px;
+                    text-align: center;
+                    position: absolute;
+                    right: 27%;
+                    bottom: 25%;
+                }
+                #calcDec{
+                    text-align: center;
+                    position: absolute;
+                    width: 90px;
+                    right: 2%;
+                    bottom: 47%;
+                }
+                #calcBin{
+                    text-align: center;
+                    position: absolute;
+                    width: 90px;
+                    right: 2%;
+                    bottom: 40%;
+                }
+                #calcHex{
+                    text-align: center;
+                    position: absolute;
+                    width: 90px;
+                    right: 2%;
+                    bottom: 33%;
+                }
+                #calcOct{
+                    text-align: center;
+                    position: absolute;
+                    width: 90px;
+                    right: 2%;
+                    bottom: 26%;
+                }
+                #goBack{
+                    background-color: turquoise;
+                    width: 300px;
+                    position: absolute;
+                    right: 9%;
+                    bottom: 7%;
+                    font-size: 30px;
+                }
+                #res{
+                    background-color: turquoise;
+                    position: absolute;
+                    right: 34%;
+                    bottom: 17%;
+                    font-size: 30px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to base convertor</h1>
+        <p>
+            Here you can convert any base that you want. the bases are [Decimal, Binary, Hexa, Octal].
+        </p>
+        
+        <span id ="dec" >Decimal: </span>
+        <span id ="bin" >Binary: </span>
+        <span id ="hex" >Hexa: </span>
+        <span id ="oct" >Octal: </span>
+
+        <input type="text" id="decimal" placeholder="Decimal" autofocus><br>
+        <input type="text" id="binary" placeholder="Binary" autofocus><br>
+        <input type="text" id="hexa" placeholder="Hexa Decimal" autofocus><br>
+        <input type="text" id="octal" placeholder="Octal" autofocus><br>
+
+        <button type="button" id="calcDec" onclick="calcDec()">Decimal Convert</button>
+        <button type="button" id="calcBin" onclick="calcBin()">Binary Convert</button>
+        <button type="button" id="calcHex" onclick="calcHex()">Hexa Convert</button>
+        <button type="button" id="calcOct" onclick="calcOct()">Octal Convert</button>
+        
+        <button type="button" id="res" onclick="reset()">Reset</button>
+
+        <button type="button" id="goBack" onclick="window.location.href='index.php'">Go Back To Menu</button>
+
+        <script>
+            var decimal = document.getElementById('decimal');
+            var binary = document.getElementById('binary');
+            var hexa = document.getElementById('hexa');
+            var octal = document.getElementById('octal');
+
+            const BIN = 2;  // Binary base
+            const HEX = 16; // Hexa Decimal base
+            const OCT = 8;  // Octal base
+            const DEC = 10; // Decimal base
+
+            function decToBinary(decimal){  // Decimal to Binary convertor
+                var tmp = decimal;
+                var number = "";
+                var result = "";
+                while (tmp != 0){
+                    if (tmp %BIN == 1){
+                        number += "1"; 
+                    } else {
+                        number += "0";
+                    }
+                    tmp /= BIN;
+                    tmp = Math.floor(tmp);
+                }
+                for (var i = number.length - 1; i >= 0; i--){
+                    result += number[i];
+                }
+                return result;
+            }
+
+            function decToHex(decimal){ // Decimal to Hexa Decimal convertor
+                var tmp = decimal;
+                var number = "";
+                var ch = '';
+                var result = "";
+                while (tmp != 0){
+                    ch = tmp % HEX;
+                    switch(ch){
+                        case 10: ch = 'A'; break;
+                        case 11: ch = 'B'; break;
+                        case 12: ch = 'C'; break;
+                        case 13: ch = 'D'; break;
+                        case 14: ch = 'E'; break;
+                        case 15: ch = 'F'; break;
+                       // default: ch += 48;
+                    }
+                    number += ch;
+                    tmp /= HEX;
+                    tmp = Math.floor(tmp);
+                }
+
+                for (var i = number.length - 1; i >= 0; i--){
+                    result += number[i];
+                }
+
+                return result;
+            }
+
+            function decToOct(decimal){ // Decimal to Octal convertor
+                var tmp = decimal;
+                var number = "";
+                var result = "";
+                var ch = '';
+                while(tmp >= 8){
+                    ch = tmp % OCT;
+                    number += ch;
+                    tmp /= OCT;
+                    tmp = Math.floor(tmp);
+                    
+                }
+
+                result += tmp;
+                for (var i = number.length - 1; i >= 0; i--){
+                    result += number[i];
+                }
+
+                return result;
+            }
+
+            function binToDec(binary){  // Binary to Decimal convertor
+                var tmp = binary;
+
+                for (var i = 0; i < tmp.length; i++){
+                    if(tmp[i] != 0 && tmp[i] != 1){
+                        var msg = "Invalid Input = "+tmp[i];
+                        alert(msg);
+                        return;
+                    }
+                }
+
+                var pow = 1;
+                var result = 0;
+                for (var i = tmp.length - 1; i >= 0; i--){
+                    if (tmp[i] == 1){
+                        result += pow;
+                    }
+                    pow *= BIN;
+                }
+                return result;
+            }
+
+            function hexToDec(hexa){ // Hexa Decimal to Decimal convertor
+                var tmp = hexa;
+                var pow = 0;
+                var result = 0;
+
+                for (var i = 0; i < tmp.length; i++){
+                    if (tmp[i] > 'F' || tmp[i] < 'A' && tmp[i] > '9' || tmp[i] < '0'){
+                        var msg = "Invalid Input = "+tmp[i];
+                        alert(msg);
+                        return;
+                    }
+                }
+                var position = tmp.length -1;
+                for (var i = 0; i < tmp.length; i++){
+                    ch = tmp[i];
+                    switch(ch){
+                        case 'A': ch = 10; break;
+                        case 'B': ch = 11; break;
+                        case 'C': ch = 12; break;
+                        case 'D': ch = 13; break;
+                        case 'E': ch = 14; break;
+                        case 'F': ch = 15; break;
+                    }
+                    var exponent = Math.pow(HEX, position--);
+                    result += exponent * ch;
+                }
+                return result;
+            }
+
+            function octToDec(octal){ // Octal to Decimal convertor
+                var tmp = octal;
+                var ch = 0;
+                var position = 0;
+                var result = 0;
+
+                for (var i = 0; i < tmp.length; i++){
+                    if (tmp[i] > 7){
+                        var msg = "Invalid Input: "+tmp[i];
+                        alert(msg);
+                        return;
+                    }
+                }
+
+                while (tmp != 0){
+                    ch = tmp % DEC;
+                    result += ch * Math.pow(OCT, position);
+                    tmp /= DEC;
+                    tmp = Math.floor(tmp);
+                    position++;
+                }
+                return result;
+            }
+
+            function calcDec(){     // Decimal button function
+                var num = decimal.value;
+                var bin = decToBinary(num);
+                var hex = decToHex(num);
+                var oct = decToOct(num);
+
+                binary.value = bin;
+                hexa.value = hex;
+                octal.value = oct;
+            }
+
+            function calcBin(){     // Binary button function
+                var num = binary.value;
+                var dec = binToDec(num);
+                var hex = decToHex(dec);
+                var oct = decToOct(dec);
+
+                decimal.value = dec;
+                hexa.value = hex;
+                octal.value = oct;
+            }
+
+            function calcHex(){     // Hexa Decimal button function
+                var num = hexa.value;
+                var dec = hexToDec(num);
+                var bin = decToBinary(dec);
+                var oct = decToOct(dec);
+
+                decimal.value = dec;
+                binary.value = bin;
+                octal.value = oct;
+            }
+
+            function calcOct(){     // Octal button function
+                var num = octal.value;
+                var dec = octToDec(num);
+                var bin = decToBinary(dec);
+                var hex = decToHex(dec);
+
+                decimal.value = dec;
+                binary.value = bin;
+                hexa.value = hex;
+            }
+
+            function reset(){ // Reset button function
+                decimal.value = null;
+                binary.value = null;
+                hexa.value = null;
+                octal.value = null;
+            }
+        </script>
+    </body>
+</html>

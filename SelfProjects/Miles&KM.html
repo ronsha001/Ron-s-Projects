@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+		<meta name="description" content="Ron's projects">
+		<meta name="keywords" content="Miles To KM & KM to Miles convertor">
+		<meta name="author" content="Ron Sharabi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Miles & KM Convertor</title>
+
+        <style>
+            body {
+                background-image: url("images/highway.jpg");
+                background-size: 100%;
+                padding: 70px;
+            }
+            fieldset{
+                text-align: center;
+                border-radius: 10px;
+                margin: 10px auto;
+                padding: 20px;
+                width: 400px;
+                background-color: aqua;
+            }
+            button{
+                margin: 5px;
+            }
+            input{
+                margin: 5px;
+                width: 200px;
+                height: 30px;
+            }
+
+            @media only screen and (max-width: 500px) {
+                body {
+                    background-image: url("images/highway.jpg");
+                    background-size: 100% 100%;
+                    padding: 20px;
+                }
+                fieldset{
+                    width: 220px;
+                    
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <fieldset>
+            <span >Miles To KM</span>
+            <br>
+            <span>Enter Miles:</span>
+            <input type="text" id="miles" placeholder="Enter Miles">
+            <button type="button" id="calcMiles" onclick="calc_Miles()">Convert</button>
+            <br>
+            <span>KM result:</span>
+            <input type="text" id="KM_Result" placeholder="KM result" readonly>
+            <br>
+            <button type="button" id="resetMiles" onclick="reset_KM_Result()">Reset</button>
+        </fieldset>
+
+        <fieldset>
+            <span >KM To Miles</span>
+            <br>
+            <span>Enter KM:</span>
+            <input type="text" id="km" placeholder="Enter KM">
+            <button type="button" id="calcKM" onclick="calc_KM()" >Convert</button>
+            <br>
+            <span>Mile result:</span>
+            <input type="text" id="MILES_Result" placeholder="Miles result" readonly>
+            <br>
+            <button type="button" id="resetKM" onclick="reset_Mile_Result()">Reset</button>
+        </fieldset>
+
+        <fieldset>
+            <span>Feet to Meter</span>
+            <br>
+            <span>Enter feet: </span>
+            <input type="text" id="ft" placeholder="Enter Feet">
+            <button type="button" id="calcFT" onclick="calc_Feets()">Convert</button>
+            <br>
+            <span>Meter result: </span>
+            <input type="text" id="FT_Result" placeholder="Meter result" readonly>
+            <br>
+            <button type="button" id="resetFT" onclick="reset_Feet_Result()">Reset</button>
+        </fieldset>
+
+        <div style="text-align: center;">
+            <button type="button" onclick="window.location.href='index.php'" style="background-color: aqua; border-radius: 10px;">Back to menu</button>
+        </div>
+
+        <script>
+            // user's input (miles)
+            var milesInput = document.getElementById('miles');
+            // user's input (km)
+            var KMInput = document.getElementById('km');
+            // user's input (ft)
+            var feetInput = document.getElementById('ft');
+
+
+            // km result window
+            var kmResult = document.getElementById('KM_Result');
+            // mile result window
+            var milesResult = document.getElementById('MILES_Result');
+            // ft result window
+            var feetResult = document.getElementById('FT_Result');
+
+            // 1 mile = 1.609344 KM
+            const KM = 1.609344;
+            // 1 km = 0.621371192 mile
+            const MILE = 0.621371192;
+            // 1 feet = 0.3048 meter
+            const METER = 0.3048;
+
+            // Convert Miles To KM Button's Function
+            function calc_Miles(){
+                var result = milesInput.value * KM;
+                kmResult.value = result + " KM";
+            }
+            // Convert KM To Miles Button's Function
+            function calc_KM(){
+                var result = KMInput.value * MILE;
+                milesResult.value = result + " Mile";
+            }
+            // Convert Feet To Meter Button's Function
+            function calc_Feets(){
+                var result = feetInput.value * METER;
+                feetResult.value = result + " Meter";
+            }
+
+            // Reset Miles To KM Results
+            function reset_KM_Result(){
+                kmResult.value = null;
+            }
+            // Reset KM To Miles Results
+            function reset_Mile_Result(){
+                milesResult.value = null;
+            }
+            // Reset Feet To Meter Results
+            function reset_Feet_Result(){
+                feetResult.value = null;
+            }
+            
+        </script>
+    </body>
+</html>

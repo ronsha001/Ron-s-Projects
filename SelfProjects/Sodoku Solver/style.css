@@ -1,0 +1,30 @@
+input{
+    height: 40px;
+    width: 40px;
+    margin: 2px;
+    font-size: 30px;
+    text-align: center;
+}
+
+#gridArea{
+    text-align: center;
+}
+#i0-2 , #i0-5 , #i1-2 , #i1-5 , #i2-2 , #i2-5 , #i3-2 , #i3-5 , #i4-2 , #i4-5 , #i5-2 , #i5-5 , #i6-2 , #i6-5 , #i7-2 , #i7-5 , #i8-2 , #i8-5{
+    margin-right: 15px;
+}
+#i2-8 , #i5-8 , #i5-8 {
+    margin-bottom: 15px;
+}
+button{
+    margin: 5px;
+}
+
+@media only screen and (max-width: 500px){
+    input{
+        height: 15px;
+        width: 15px;
+        margin: 2px;
+        font-size: 20px;
+        text-align: center;
+    }
+}
