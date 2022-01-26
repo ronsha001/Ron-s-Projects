@@ -8,6 +8,9 @@
         $pass = $_POST['password'];
         $verify_pass = $_POST['verify_password'];
         $email = $_POST['email'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $gender = $_POST['gender'];
         # Check if this username is already taken or if this email already has an account.
         $sql = "SELECT * FROM $table WHERE username='$user'";
         $result = mysqli_query($connection, $sql);
@@ -28,11 +31,18 @@
         }
         if ($pass == $verify_pass){
             $token = md5(rand());
-            $sql = "INSERT INTO `$table` (`username`, `password`, `email`, `verify_token`) VALUES ('$user', '$pass', '$email', '$token')";
-            mysqli_query($connection, $sql);
-            mysqli_close($connection);
-            header("Location: index.php");
-            exit();
+            $sql = "INSERT INTO `$table` (`username`, `password`, `email`, `verify_token`, `first_name`, `last_name`, `gender`) VALUES ('$user', '$pass', '$email', '$token', '$first_name', '$last_name', '$gender')";
+            $insert = mysqli_query($connection, $sql);
+            if ($insert){
+                mysqli_close($connection);
+                header("Location: index.php");
+                exit();
+            } else {
+                $_SESSION['status'] = "Something went wrong. #2";
+                mysqli_close($connection);
+                header("Location: createAccount.php");
+                exit();
+            }
         } else {
             $_SESSION['status'] = "Password and verify password does not match.";
             mysqli_close($connection);

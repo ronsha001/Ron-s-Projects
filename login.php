@@ -20,6 +20,9 @@
             $_SESSION['time_start'] = time();
             $_SESSION['token'] = $user_row['verify_token'];
             $_SESSION['email'] = $user_row['email'];
+            $_SESSION['first_name'] = $user_row['first_name'];
+            $_SESSION['last_name'] = $user_row['last_name'];
+            $_SESSION['gender'] = $user_row['gender'];
         }
         
     }

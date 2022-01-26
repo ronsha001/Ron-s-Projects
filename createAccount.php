@@ -22,15 +22,14 @@
             padding: 0;
             font-family: montserrat;
             background: linear-gradient(240deg, #2980b9, #8e44ad);
-            height: 100vh;
-            overflow: hidden;
+            height: 120vh;
         }
         .center{
             position: absolute;
-            top: 50%;
+            top: 54%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 400px;
+            width: 470px;
             background: white;
             border-radius: 10px;
         }
@@ -136,10 +135,57 @@
             color: #fff;
             font-family: serif;
         }
+        
+        .gender-details .gender-title{
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .gender-details .category{
+            display: flex;
+            width: 90%;
+            margin: 14px 0;
+            justify-content: space-between;
+        }
+        .gender-details .category label{
+            display: flex;
+            align-items: center;
+        }
+        .gender-details .category .dot{
+            height: 18px;
+            width: 18px;
+            background: #d9d9d9;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 5px solid transparent;
+            transition: all 0.3s ease;
+        }
+        #dot-1:checked ~ .category label .one,
+        #dot-2:checked ~ .category label .two,
+        #dot-3:checked ~ .category label .three{
+            border-color: #d9d9d9;
+            background: #3d3d3d;
+        }
+        form input[type="radio"]{
+            display: none;
+        }
         @media only screen and (max-width: 500px) {
+            body{
+                height: 100vh;
+            }
             .center{
-                width: 300px;
-            }  
+                width: 330px;
+                height: 500px;
+                overflow-y: scroll;
+                top: 50%;
+            }
+            form .gender-details .category{
+                width: 100%;
+            }
+            .gender-details .category label{
+                display: flex;
+                flex-direction: column;
+                
+            }
         }
     </style>
 </head>
@@ -150,27 +196,60 @@
         </div>
 
         <h1>Register</h1>
-        <form action="insertNewAccount.php" method="POST">
-            <div class="txt_field">
-                <input type="text" name="username" required>
-                <span></span>
-                <label>Username</label>
+        
+            <form action="insertNewAccount.php" method="POST">
+                <div class="txt_field">
+                    <input type="text" name="username" required>
+                    <span></span>
+                    <label>Username</label>
+                </div>
+                <div class="txt_field">
+                    <input type="email" name="email" required>
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" name="first_name" required>
+                    <span></span>
+                    <label>First Name</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" name="last_name" required>
+                    <span></span>
+                    <label>Last Name</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" name="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" name="verify_password" required>
+                    <span></span>
+                    <label>Verify Password</label>
+                </div>
+            
+            <div class="gender-details">
+                <input type="radio" name="gender" id="dot-1" value="Male" required>
+                <input type="radio" name="gender" id="dot-2" value="Female" required>
+                <input type="radio" name="gender" id="dot-3" value="Prefer not to say" required>
+                <span class="gender-title">Gender</span>
+                <div class="category">
+                    <label for="dot-1">
+                        <span class="dot one"></span>
+                        <span class="gender">Male</span>
+                    </label>
+                    <label for="dot-2">
+                        <span class="dot two"></span>
+                        <span class="gender">Female</span>
+                    </label>
+                    <label for="dot-3">
+                        <span class="dot three"></span>
+                        <span class="gender">Prefer not to say</span>
+                    </label>
+                </div>
             </div>
-            <div class="txt_field">
-                <input type="password" name="password" required>
-                <span></span>
-                <label>Password</label>
-            </div>
-            <div class="txt_field">
-                <input type="password" name="verify_password" required>
-                <span></span>
-                <label>Verify Password</label>
-            </div>
-            <div class="txt_field">
-                <input type="email" name="email" required>
-                <span></span>
-                <label>Email</label>
-            </div>
+
             <input type="submit" value="Register">
         </form>
         <div class="login_link">
