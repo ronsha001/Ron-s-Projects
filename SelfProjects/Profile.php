@@ -3,6 +3,7 @@
     $username = '';
     $email = '';
     $isRegistered = false;
+    $picture_path = '';
     if (isset($_SESSION['token'])){
         $token =  $_SESSION['token'];
         $username = $_SESSION['username'];
@@ -11,6 +12,7 @@
         $last_name = $_SESSION['last_name'];
         $gender = $_SESSION['gender'];
         $isRegistered = true;
+        $picture_path = $_SESSION['picture'];
     } else {
         header("Location: ../index.php");
         exit();
@@ -28,6 +30,11 @@
     <title>Profile</title>
 
     <style>
+        .container{
+            padding: 30px;
+            display: flex;
+            flex-direction: row;
+        }
         .logo h1 {
             font-size: 40px;
             margin-bottom: 8px;
@@ -36,6 +43,28 @@
         }
         .logo a:link{
             text-decoration: none;
+        }
+        .img-section img{
+            width: 200px;
+            height: auto;
+            margin-right: 18px;
+        }
+        .details ul{
+            list-style-type: none;
+        }
+        .details span{
+            font-weight: bold;
+            font-size: 18px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        @media screen and (max-width: 500px){
+            .container{
+                padding: 30px;
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -64,8 +93,20 @@
     </nav>
     <script src="scripts/Nav.js" type="text/javascript"></script>
 
-    <?php echo $first_name."-----".$last_name."-----".$gender ?>
-    <h1>In Maintenance</h1>
+    <div class="container">
+        <div class="img-section">
+            <img src="<?php echo $picture_path ?>" alt="Profile Picture">
+        </div>
+        <div class="details">
+            <ul class="list">
+                <li><span>First name: </span><?php echo $first_name ?></li>
+                <li><span>Last name: </span><?php echo $last_name ?></li>
+                <li><span>Gender: </span><?php echo $gender ?></li>
+                <li><span>Email: </span><?php echo $email ?></li>
+            </ul>
+        </div>
+    </div>
+    
 
 </body>
 </html>

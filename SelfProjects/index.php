@@ -156,7 +156,7 @@
                 <source src="videos/video-1.mp4" type="video/mp4">
             </video>
             <div class="wlcm">
-                <h1>Hello <?php echo  $_SESSION['first_name'] ?>, Welcome to Ron's Projects</h1>
+                <h1>Hello <?php if($isRegistered){echo $_SESSION['first_name'];}else{echo "Guest";} ?>, Welcome to Ron's Projects</h1>
             </div>
             <div class="container">
                 <ul class="container-buttons">

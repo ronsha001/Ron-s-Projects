@@ -23,6 +23,11 @@
             $_SESSION['first_name'] = $user_row['first_name'];
             $_SESSION['last_name'] = $user_row['last_name'];
             $_SESSION['gender'] = $user_row['gender'];
+            if ($user_row['picture_path'] == null) {
+                $_SESSION['picture'] = "images/default_profile_picture.png";
+            } else {
+                $_SESSION['picture'] = $user_row['picture_path'];
+            }
         }
         
     }

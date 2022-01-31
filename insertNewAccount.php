@@ -31,7 +31,7 @@
         }
         if ($pass == $verify_pass){
             $token = md5(rand());
-            $sql = "INSERT INTO `$table` (`username`, `password`, `email`, `verify_token`, `first_name`, `last_name`, `gender`) VALUES ('$user', '$pass', '$email', '$token', '$first_name', '$last_name', '$gender')";
+            $sql = "INSERT INTO `$table` (`username`, `password`, `email`, `verify_token`, `first_name`, `last_name`, `gender`, `picture_path`) VALUES ('$user', '$pass', '$email', '$token', '$first_name', '$last_name', '$gender', 'images/default_profile_picture.png')";
             $insert = mysqli_query($connection, $sql);
             if ($insert){
                 mysqli_close($connection);
