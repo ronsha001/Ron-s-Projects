@@ -21,6 +21,9 @@
     $password_type = 'hidden';
     $password_value = '';
 
+    $picture_error_type = 'hidden';
+    $picture_error_value = '';
+
     if (isset($_SESSION['status']) and isset($_SESSION['color'])){
         $value = $_SESSION['status'];
         $type = 'text';
@@ -37,6 +40,15 @@
 
         unset($_SESSION['password_status']);
         unset($_SESSION['password_color']);
+    }
+
+    if (isset($_SESSION['picture_status']) and isset($_SESSION['picture_error_color'])){
+        $picture_error_value = $_SESSION['picture_status'];
+        $picture_error_type = 'text';
+        $color = $_SESSION['picture_error_color'];
+
+        unset($_SESSION['picture_status']);
+        unset($_SESSION['picture_error_color']);
     }
 
 ?>
@@ -68,17 +80,21 @@
         
         .container{
             position: absolute;
-            left: 50%;
-            top: 50%;
-            display: inline;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            left: 1.3%;
+            top: 10%;
+            
         }
         .center{
             position: relative;
-            transform: translate(-50%, -50%);
+            
             width: 400px;
             background: white;
             border-radius: 10px;
-            margin-top: 50px;
+            margin: 50px;
+            float: left;
         }
         .center h1{
             text-align: center;
@@ -185,6 +201,12 @@
             color: #fff;
             font-family: serif;
         }
+        @media only screen and (max-width: 900px) {
+            .container{
+                flex-direction: column;
+            }
+            
+        }
         @media only screen and (max-width: 500px) {
             .center{
                 width: 300px;
@@ -219,6 +241,20 @@
     <script src="scripts/Nav.js" type="text/javascript"></script>
     
     <div class="container">
+
+        <div class="center">
+            <div class="error">
+                <input type="<?php echo $picture_error_type ?>" value="<?php echo $picture_error_value; ?>" disabled>
+            </div>
+            
+            <h1>Update Profile Picture</h1>
+            <form action="upload-picture-code.php" method="POST" enctype="multipart/form-data">
+                <div class="txt_field">
+                    <input type="file" name="file" accept="image/png, image/gif, image/jpeg" required>
+                </div>
+                <input type="submit" value="Update" name="submit">
+            </form>
+        </div>
 
         <div class="center">
             <div class="error">

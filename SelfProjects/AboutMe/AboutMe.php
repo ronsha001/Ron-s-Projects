@@ -3,12 +3,14 @@
     $user = '';
     $login_or_logout = '';
     $loginLink_or_logoutLink = '';
+    $first_name = '';
     if (!isset($_SESSION['username']) or empty($_SESSION['username'])){
         $user = "";
         $login_or_logout = "Login";
         $loginLink_or_logoutLink = "../../index.php";
     } else {
         $user = $_SESSION['username'];
+        $first_name = $_SESSION['first_name'];
         $login_or_logout = "Logout";
         $loginLink_or_logoutLink = "../../logout.php";
         $isRegistered = true;
@@ -80,7 +82,7 @@
                     <h1>About Me</h1>
                 </div>
                 <div class="content">
-                    <h3>Hi <?php echo $user ?>, my name is Ron and I created this website.</h3>
+                    <h3>Hi <?php echo $first_name ?>, my name is Ron and I created this website.</h3>
                     <p>I'm 25 years old, software engineer student and live in Israel, central.
                     While serving in the IDF as a security officer, I began to learn a little about software languages.
                     Upon completion of my duty, I enrolled for a degree in software engineering.
