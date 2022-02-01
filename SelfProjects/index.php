@@ -158,14 +158,14 @@
                 <div class="search">
                     <div class="icon"></div>
                     <div class="input">
-                        <input type="text" name="info" placeholder="Search" id="mysearch">
+                        <input type="text" name="info" placeholder="Search Users" id="mysearch">
                     </div>
                     <span class="clear"></span>
                 </div>
             </div>
-            
         </form>
-        
+        <script src="scripts/Search.js" type="text/javascript"></script>
+
         <!-- onclick="this.closest('form').submit();return false;" -->
         <div class="header">
             
@@ -190,25 +190,6 @@
             </div>
         </div>
 
-        <script>
-            const icon = document.querySelector('.icon');
-            const search = document.querySelector('.search');
-            const clear = document.querySelector('.clear');
-            var mysearch = document.getElementById('mysearch');
-
-            icon.onclick = function() {
-                search.classList.toggle('active');
-                search_active = document.querySelector('.icon');
-                if (mysearch.value > ''){
-                    this.closest('form').submit();
-                    mysearch.value = '';
-                    return false;
-                }
-            }
-            clear.onclick = function() {
-                mysearch.value = '';
-                search.className = 'search';
-            }
-        </script>
+        
     </body>
 </html>
