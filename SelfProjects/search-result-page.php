@@ -13,6 +13,7 @@
         $loginLink_or_logoutLink = "../logout.php";
         $isRegistered = true;
     }
+    $id = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,28 +103,29 @@
                         "<div class='cards'>";
 
             while($row = mysqli_fetch_array($search_users_run)){
-                /*echo "<table>".
-                        "<tr> <th>Name</th> <th>Gender</th> <th>Email</th></tr>".
-                            "<tr>".
-                                "<td>".$row[6]." ".$row[7]."</td>".
-                                "<td>".$row[8]."</td>".
-                                "<td>".$row[5]."</td>".
-                        "</tr>".
-                    "</table>";*/
                 
-                echo "<div class='cards-1 hover'>".
-                        "<img src=".$row['picture_path']." alt='Profile Picture'>".
-                        "<div class='card-footer'>".
-                            "<h3>".$row['first_name']." ".$row['last_name']."</h3>".
-                            "<p>".$row['gender']."</p>".
-                            "<div class='social-icon'>".
-                                "<a href='#'><i class='fab fa-instagram'></i></a>".
-                                "<a href='#'><i class='fab fa-linkedin'></i></a>".
-                                "<a href='#'><i class='fab fa-github'></i></a>".
+                echo "<form action='UserProfile.php' method='GET'>".
+                        "<div class='cards-1 hover' id='$id'>".
+                            "<img src=".$row['picture_path']." alt='Profile Picture'>".
+                            "<div class='card-footer'>".
+                                "<h3>".$row['first_name']." ".$row['last_name']."</h3>".
+                                "<p>".$row['gender']."</p>".
+                                "<div class='social-icon'>".
+                                    "<a href='#'><i class='fab fa-instagram'></i></a>".
+                                    "<a href='#'><i class='fab fa-linkedin'></i></a>".
+                                    "<a href='#'><i class='fab fa-github'></i></a>".
+                                "</div>".
+                                "<input type='hidden' name='firstName' value=".$row['first_name'].">".
+                                "<input type='hidden' name='lastName' value=".$row['last_name'].">".
+                                "<input type='hidden' name='picture_path' value=".$row['picture_path'].">".
+                                "<input type='hidden' name='gender' value=".$row['gender'].">".
+                                "<input type='hidden' name='email' value=".$row['email'].">".
                             "</div>".
                         "</div>".
-                    "</div>";
+                    "</form>";
+                    $id++;
             }
+            mysqli_close($connection);
             echo "</div>".
             "</div>";
         } else {
@@ -132,6 +134,15 @@
         }
         
     ?>
-
+    <script>
+        var cards = Array(<?php echo $id ?>);
+        for(var i = 0; i < cards.length; i++){
+            cards[i] = document.getElementById(i);
+            cards[i].onclick = function(){
+                this.closest("form").submit();
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
