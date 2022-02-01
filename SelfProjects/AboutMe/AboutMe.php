@@ -35,6 +35,10 @@
     <title>About Me</title>
 
     <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
         .logo h1 {
             font-size: 40px;
             margin-bottom: 8px;

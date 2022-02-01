@@ -28,8 +28,10 @@
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
         <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
         <link rel="icon" type="png" href="images/stoned.jpg">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-        <link rel="stylesheet" href="styles/Nav.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
+        <link rel="stylesheet" type="text/css" href="styles/Nav.css">
+        <link rel="stylesheet" type="text/css" href="Search.css">
         <title>Projects Menu</title>
         
         <style>
@@ -46,7 +48,7 @@
                 margin-top: -150px;
                 object-fit: cover;
                 width: 100%;
-                height: 100%;
+                height: auto;
                 position: fixed;
                 z-index: -1;
             }
@@ -97,6 +99,11 @@
                 background-color: transparent;
                 
             }
+            @media only screen and (max-width: 1500px) {
+                #myVideo {
+                    height: fit-content;
+                }
+            }
             @media only screen and (max-width: 768px) {
                 
                 .wlcm > h1 {
@@ -111,20 +118,16 @@
                     width: 100%;
                     margin-left: 0%;
                 }
-                #myVideo {
-                    margin-top: -150px;
-                    object-fit: cover;
-                    width: 100%;
-                    height: 100%;
-                    position: fixed;
-                    z-index: -1;
-                }
             }
-
+            
         </style>
     </head>
 
     <body>
+        <video autoplay muted loop id="myVideo">
+            <source src="videos/video-1.mp4" type="video/mp4">
+        </video>
+
         <!-- Navigation bar, Ty Dev Ed-->
         <nav>
             <div class="logo">
@@ -148,13 +151,24 @@
             </div>        
         </nav>
         <script src="scripts/Nav.js" type="text/javascript"></script>
-
-
-
+        
+        <!-- Search Box -->
+        <form action="search-result-page.php" method="GET">
+            <div class="search-container">
+                <div class="search">
+                    <div class="icon"></div>
+                    <div class="input">
+                        <input type="text" name="info" placeholder="Search" id="mysearch">
+                    </div>
+                    <span class="clear"></span>
+                </div>
+            </div>
+            
+        </form>
+        
+        <!-- onclick="this.closest('form').submit();return false;" -->
         <div class="header">
-            <video autoplay muted loop id="myVideo">
-                <source src="videos/video-1.mp4" type="video/mp4">
-            </video>
+            
             <div class="wlcm">
                 <h1>Hello <?php if($isRegistered){echo $_SESSION['first_name'];}else{echo "Guest";} ?>, Welcome to Ron's Projects</h1>
             </div>
@@ -175,5 +189,26 @@
                 
             </div>
         </div>
+
+        <script>
+            const icon = document.querySelector('.icon');
+            const search = document.querySelector('.search');
+            const clear = document.querySelector('.clear');
+            var mysearch = document.getElementById('mysearch');
+
+            icon.onclick = function() {
+                search.classList.toggle('active');
+                search_active = document.querySelector('.icon');
+                if (mysearch.value > ''){
+                    this.closest('form').submit();
+                    mysearch.value = '';
+                    return false;
+                }
+            }
+            clear.onclick = function() {
+                mysearch.value = '';
+                search.className = 'search';
+            }
+        </script>
     </body>
 </html>

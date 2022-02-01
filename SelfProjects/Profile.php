@@ -30,10 +30,16 @@
     <title>Profile</title>
 
     <style>
+        body{
+            padding: 0;
+            margin: 0;
+            background: #DDDDDD;
+        }
         .container{
             padding: 30px;
             display: flex;
             flex-direction: row;
+            align-items: center;
         }
         .logo h1 {
             font-size: 40px;
@@ -44,13 +50,17 @@
         .logo a:link{
             text-decoration: none;
         }
+        .img-section{
+            border-right: 1px solid #3d3d3d;
+        }
         .img-section img{
             width: 200px;
             height: auto;
-            margin-right: 18px;
+            margin-right: 12px;
         }
         .details ul{
             list-style-type: none;
+            margin-left: 12px;
         }
         .details span{
             font-weight: bold;
@@ -63,7 +73,11 @@
                 padding: 30px;
                 display: flex;
                 flex-direction: column;
-                text-align: center;
+                align-items: center;
+            }
+            .img-section{
+                border-right: none;
+                border-bottom: 1px solid #3d3d3d;
             }
         }
     </style>
@@ -97,6 +111,7 @@
         <div class="img-section">
             <img src="<?php echo $picture_path ?>" alt="Profile Picture">
         </div>
+        
         <div class="details">
             <ul class="list">
                 <li><span>First name: </span><?php echo $first_name ?></li>

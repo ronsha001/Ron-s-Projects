@@ -4,18 +4,15 @@
     width: 200px;
     cursor: pointer;
 }
-
-*{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+.logo{
+    margin-left: 20px;
 }
 nav{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     min-width: 8vh;
-    background-color: #3d3d3d;
+    background-color: #2f3640;
 }
 .nav-links{
     display: flex;
@@ -36,6 +33,7 @@ nav{
 .nav-links a:hover{
     font-size: 19px;
     transition: all 0.5s ease;
+    color: #e84118;
 }
 
 .burger{
@@ -48,7 +46,7 @@ nav{
     height: 3px;
     background-color: rgb(235, 235, 235);
     margin: 5px;
-    transition: all 0.5s ease;
+    transition: all 0.2s ease;
 }
 
 @media screen and (max-width:1024px) {
@@ -59,7 +57,7 @@ nav{
     }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:1024px) {
     body, html{
         overflow-x: hidden;
         width: 100%;
@@ -71,15 +69,15 @@ nav{
         position: absolute;
         right: 0px;
         height: 92vh;
-        top: 8vh;
-        background-color: #3d3d3d;
+        top: 5vh;
+        background-color: #2f3640;
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 50%;
         transform: translateX(100%);
         transition: transform 0.5s ease-in;
-        z-index: 1;
+        z-index: 1001;
     }
     .nav-links li{
         opacity: 0;

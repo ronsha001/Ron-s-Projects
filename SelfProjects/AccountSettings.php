@@ -66,7 +66,9 @@
 
     <style>
         body{
-            background: linear-gradient(to right, #2ed573, #f9ca24);
+            background: #DDDDDD;
+            padding: 0;
+            margin: 0;
         }
         .logo h1 {
             font-size: 40px;
@@ -77,19 +79,16 @@
         .logo a:link{
             text-decoration: none;
         }
-        
         .container{
             position: absolute;
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-            left: 1.3%;
-            top: 10%;
             
+            
+            top: 10%;
         }
         .center{
             position: relative;
-            
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minimax(150px, 1fr));
             width: 400px;
             background: white;
             border-radius: 10px;
@@ -204,6 +203,7 @@
         @media only screen and (max-width: 900px) {
             .container{
                 flex-direction: column;
+                justify-content: center;
             }
             
         }
@@ -240,8 +240,8 @@
     </nav>
     <script src="scripts/Nav.js" type="text/javascript"></script>
     
+    
     <div class="container">
-
         <div class="center">
             <div class="error">
                 <input type="<?php echo $picture_error_type ?>" value="<?php echo $picture_error_value; ?>" disabled>
@@ -309,6 +309,7 @@
         </div>
         
     </div>
+    
     
 </body>
 </html>
